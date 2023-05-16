@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { getCategoriesFromDb } from '@database/queries/CategoryQueries';
+import { getAllCategories } from '@database/queries/CategoryQueries';
 import {
   getLibraryWithCategory,
   getLibraryNovelsFromDb,
@@ -30,7 +30,7 @@ export const useLibrary = ({ searchText }: { searchText?: string }) => {
     }
 
     const [categories, novels] = await Promise.all([
-      getCategoriesFromDb(),
+      getAllCategories(),
       getLibraryWithCategory({
         searchText,
         filter,

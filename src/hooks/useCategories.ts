@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getCategoriesFromDb } from '@database/queries/CategoryQueries';
+import { getAllCategories } from '@database/queries/CategoryQueries';
 import { Category } from '@database/types';
 
 const useCategories = () => {
@@ -10,7 +10,7 @@ const useCategories = () => {
 
   const getCategories = async () => {
     try {
-      const res = await getCategoriesFromDb();
+      const res = await getAllCategories();
       setCategories(res);
     } catch (err) {
       if (err instanceof Error) {
