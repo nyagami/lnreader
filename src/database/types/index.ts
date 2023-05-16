@@ -1,4 +1,31 @@
 import { NovelStatus } from '@plugins/types';
+
+export interface Category {
+  id: number;
+  name: string;
+  sort: number;
+}
+
+export interface Novel {
+  id: number;
+  url: string;
+  pluginId: string;
+  categories: Category[];
+  name: string;
+  cover?: string;
+  summary?: string;
+  author?: string;
+  artist?: string;
+  status?: NovelStatus;
+  genres?: string;
+  inLibrary: number;
+}
+
+export interface LibraryNovel extends Novel {
+  chaptersUnread: number;
+  chaptersDownloaded: number;
+}
+
 export interface NovelInfo {
   id: number;
   url: string;
@@ -11,12 +38,6 @@ export interface NovelInfo {
   status?: NovelStatus;
   genres?: string;
   inLibrary: number;
-}
-
-export interface LibraryNovelInfo extends NovelInfo {
-  category: string;
-  chaptersUnread: number;
-  chaptersDownloaded: number;
 }
 
 export interface ChapterInfo {
@@ -68,12 +89,6 @@ export interface Update {
   name: string; //  chapterName
   url: string; //  chapterUrl
   updatedTime: string;
-}
-
-export interface Category {
-  id: number;
-  name: string;
-  sort: number;
 }
 
 export interface LibraryStats {

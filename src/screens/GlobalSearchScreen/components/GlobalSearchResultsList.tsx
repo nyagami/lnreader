@@ -12,7 +12,7 @@ import { useTheme } from '@hooks/useTheme';
 import { GlobalSearchResult } from '../hooks/useGlobalSearch';
 import GlobalSearchNovelItem from './GlobalSearchNovelItem';
 import { useLibraryNovels } from '@screens/library/hooks/useLibrary';
-import { LibraryNovelInfo } from '@database/types';
+import { LibraryNovel } from '@database/types';
 import GlobalSearchSkeletonLoading from '@screens/browse/loadingAnimation/GlobalSearchSkeletonLoading';
 import { switchNovelToLibrary } from '@database/queries/NovelQueries';
 
@@ -27,7 +27,7 @@ const GlobalSearchResultsList: React.FC<GlobalSearchResultsListProps> = ({
 }) => {
   const theme = useTheme();
   const navigation = useNavigation<StackNavigationProp<any>>();
-  const keyExtractor = useCallback(item => item.plugin.id, []);
+  const keyExtractor = useCallback((item: any) => item.plugin.id, []);
   const { library, setLibrary } = useLibraryNovels();
 
   const novelInLibrary = (novelUrl: string) =>
@@ -36,7 +36,7 @@ const GlobalSearchResultsList: React.FC<GlobalSearchResultsListProps> = ({
   const errorColor = useMemo(() => (theme.isDark ? '#B3261E' : '#F2B8B5'), []);
 
   const navigateToNovel = useCallback(
-    item => navigation.push('Novel', item),
+    (item: any) => navigation.push('Novel', item),
     [],
   );
 
@@ -122,7 +122,7 @@ const GlobalSearchResultsList: React.FC<GlobalSearchResultsListProps> = ({
                               ...prevValues,
                               {
                                 url: novelItem.url,
-                              } as LibraryNovelInfo,
+                              } as LibraryNovel,
                             ];
                           }
                         });

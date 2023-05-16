@@ -8,15 +8,15 @@ import {
   ListRenderItem,
 } from 'react-native';
 import { NovelItem } from '@plugins/types';
-import { LibraryNovelInfo, NovelInfo } from '../database/types';
+import { LibraryNovel, NovelInfo } from '../database/types';
 import { useDeviceOrientation } from '@hooks/useDeviceOrientation';
 
 export type NovelListRenderItem = ListRenderItem<
-  LibraryNovelInfo | NovelInfo | NovelItem
+  LibraryNovel | NovelInfo | NovelItem
 >;
 
 const NovelList: React.FC<
-  FlatListProps<LibraryNovelInfo | NovelInfo | NovelItem>
+  FlatListProps<LibraryNovel | NovelInfo | NovelItem>
 > = props => {
   const { displayMode = DisplayModes.Comfortable, novelsPerRow = 3 } =
     useLibrarySettings();
