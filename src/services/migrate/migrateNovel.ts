@@ -3,7 +3,7 @@ import * as Notifications from 'expo-notifications';
 import BackgroundService from 'react-native-background-actions';
 import { store } from '@redux/store';
 
-import { NovelInfo, ChapterInfo } from '@database/types';
+import { Novel, ChapterInfo } from '@database/types';
 import {
   getNovel,
   insertNovelandChapters,
@@ -53,7 +53,7 @@ const sortChaptersByNumber = (novelName: string, chapters: ChapterInfo[]) => {
 
 export const migrateNovel = async (
   pluginId: string,
-  fromNovel: NovelInfo,
+  fromNovel: Novel,
   toNovelUrl: string,
 ) => {
   try {

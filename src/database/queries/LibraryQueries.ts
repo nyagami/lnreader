@@ -1,8 +1,8 @@
 import { LibraryFilter } from '@screens/library/constants/constants';
 import * as SQLite from 'expo-sqlite';
-import { LibraryNovel, Novel } from '../types';
+import { ExtendedNovel, Novel } from '../types';
 import { txnErrorCallback } from '../utils/helpers';
-import { fetchEagerNovel } from '.';
+import { fetchEagerLibraryNovel } from '.';
 
 const db = SQLite.openDatabase('lnreader.db');
 
@@ -67,7 +67,7 @@ export const getLibraryNovels = ({
   filter?: string;
   searchText?: string;
   downloadedOnlyMode?: boolean;
-}): Promise<LibraryNovel[]> => {
+}): Promise<ExtendedNovel[]> => {
   let query = `
     SELECT 
       Novel.*, chaptersUnread, chaptersDownloaded, lastReadAt, lastUpdatedAt
@@ -104,9 +104,9 @@ export const getLibraryNovels = ({
         query,
         [],
         (txObj, { rows }) => {
-          Promise.all(rows._array.map(novel => fetchEagerNovel(novel))).then(
-            res => resolve(res as LibraryNovel[]),
-          );
+          Promise.all(
+            rows._array.map(novel => fetchEagerLibraryNovel(novel)),
+          ).then(res => resolve(res as ExtendedNovel[]));
         },
         txnErrorCallback,
       );

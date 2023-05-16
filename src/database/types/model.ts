@@ -44,11 +44,6 @@ export interface History {
   novel: Novel;
 }
 
-export interface LibraryNovel extends Novel {
-  chaptersUnread: number;
-  chaptersDownloaded: number;
-}
-
 export interface LibraryStats {
   novelsCount?: number;
   chaptersCount?: number;

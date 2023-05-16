@@ -3,7 +3,7 @@ import { Dimensions, StatusBar } from 'react-native';
 import WebView from 'react-native-webview';
 
 import { useTheme } from '@hooks/useTheme';
-import { ChapterInfo, NovelInfo } from '@database/types';
+import { ChapterInfo, Novel } from '@database/types';
 import { useReaderSettings } from '@redux/hooks';
 import { getString } from '@strings/translations';
 
@@ -15,7 +15,7 @@ type WebViewPostEvent = {
 };
 
 type WebViewReaderProps = {
-  chapterInfo: { novel: NovelInfo; chapter: ChapterInfo };
+  chapterInfo: { novel: Novel; chapter: ChapterInfo };
   html: string;
   chapterName: string;
   swipeGestures: boolean;

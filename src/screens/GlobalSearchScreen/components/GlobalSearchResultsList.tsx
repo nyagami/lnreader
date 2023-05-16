@@ -12,7 +12,7 @@ import { useTheme } from '@hooks/useTheme';
 import { GlobalSearchResult } from '../hooks/useGlobalSearch';
 import GlobalSearchNovelItem from './GlobalSearchNovelItem';
 import { useLibraryNovels } from '@screens/library/hooks/useLibrary';
-import { LibraryNovel } from '@database/types';
+import { Novel } from '@database/types';
 import GlobalSearchSkeletonLoading from '@screens/browse/loadingAnimation/GlobalSearchSkeletonLoading';
 import { switchNovelToLibrary } from '@database/queries/NovelQueries';
 
@@ -110,23 +110,28 @@ const GlobalSearchResultsList: React.FC<GlobalSearchResultsListProps> = ({
                       navigateToNovel={navigateToNovel}
                       theme={theme}
                       onLongPress={() => {
-                        setLibrary(prevValues => {
-                          if (inLibrary) {
-                            return [
-                              ...prevValues.filter(
-                                novel => novel.url !== novelItem.url,
-                              ),
-                            ];
-                          } else {
-                            return [
-                              ...prevValues,
-                              {
-                                url: novelItem.url,
-                              } as LibraryNovel,
-                            ];
-                          }
+                        switchNovelToLibrary(
+                          novelItem.url,
+                          item.plugin.id,
+                        ).then(() => {
+                          setLibrary(prevValues => {
+                            if (inLibrary) {
+                              return [
+                                ...prevValues.filter(
+                                  novel => novel.url !== novelItem.url,
+                                ),
+                              ];
+                            } else {
+                              return [
+                                ...prevValues,
+                                {
+                                  ...novelItem,
+                                  inLibrary: 1,
+                                } as Novel,
+                              ];
+                            }
+                          });
                         });
-                        switchNovelToLibrary(novelItem.url, item.plugin.id);
                       }}
                     />
                   );

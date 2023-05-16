@@ -1,11 +1,11 @@
 import * as SQLite from 'expo-sqlite';
-import { LibraryNovel, Novel } from '@database/types';
+import { ExtendedNovel } from '@database/types';
 
 const db = SQLite.openDatabase('lnreader.db');
 
-export const fetchEagerNovel = (
-  novel: Novel,
-): Promise<Novel | LibraryNovel> => {
+export const fetchEagerLibraryNovel = (
+  novel: ExtendedNovel,
+): Promise<ExtendedNovel> => {
   const query = `
         SELECT C.* FROM Category as C
         JOIN NovelCategory as NC

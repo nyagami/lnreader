@@ -1,4 +1,4 @@
-import { NovelStatus } from '@plugins/types';
+import { NovelItem } from '@plugins/types';
 
 export interface Category {
   id: number;
@@ -6,38 +6,16 @@ export interface Category {
   sort: number;
 }
 
-export interface Novel {
+export interface Novel extends NovelItem {
   id: number;
-  url: string;
   pluginId: string;
-  categories: Category[];
-  name: string;
-  cover?: string;
-  summary?: string;
-  author?: string;
-  artist?: string;
-  status?: NovelStatus;
-  genres?: string;
   inLibrary: number;
 }
 
-export interface LibraryNovel extends Novel {
+export interface ExtendedNovel extends Novel {
+  categories: Category[];
   chaptersUnread: number;
   chaptersDownloaded: number;
-}
-
-export interface NovelInfo {
-  id: number;
-  url: string;
-  pluginId: string;
-  name: string;
-  cover?: string;
-  summary?: string;
-  author?: string;
-  artist?: string;
-  status?: NovelStatus;
-  genres?: string;
-  inLibrary: number;
 }
 
 export interface ChapterInfo {

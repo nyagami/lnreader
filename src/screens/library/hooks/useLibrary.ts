@@ -7,12 +7,12 @@ import {
   getNovelsInLibrary,
 } from '@database/queries/LibraryQueries';
 
-import { Category, LibraryNovel, Novel } from '@database/types';
+import { Category, ExtendedNovel, Novel } from '@database/types';
 
 import { useLibrarySettings } from '@hooks/useSettings';
 import { LibrarySortOrder } from '../constants/constants';
 
-type Library = Category & { novels: LibraryNovel[] };
+type Library = Category & { novels: ExtendedNovel[] };
 
 export const useLibrary = ({ searchText }: { searchText?: string }) => {
   const {
@@ -38,7 +38,6 @@ export const useLibrary = ({ searchText }: { searchText?: string }) => {
         downloadedOnlyMode,
       }),
     ]);
-    console.log(novels);
     const res = categories.map(category => ({
       ...category,
       novels: novels.filter(novel =>
