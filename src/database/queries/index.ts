@@ -1,5 +1,6 @@
 import * as SQLite from 'expo-sqlite';
-import { ExtendedNovel } from '@database/types';
+import { Chapter, ExtendedChapter, ExtendedNovel } from '@database/types';
+import { txnErrorCallback } from '@database/utils/helpers';
 
 const db = SQLite.openDatabase('lnreader.db');
 
@@ -18,6 +19,22 @@ export const fetchEagerLibraryNovel = (
         novel.categories = rows._array;
         resolve(novel);
       });
+    });
+  });
+};
+
+export const fetchEagerChapter = (
+  chapter: Chapter,
+): Promise<ExtendedChapter> => {
+  return new Promise(resolve => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * FROM Novel WHERE id = ?',
+        [chapter.novelId],
+        (txObj, { rows }) =>
+          resolve({ ...chapter, novel: rows.item(0) } as ExtendedChapter),
+        txnErrorCallback,
+      );
     });
   });
 };

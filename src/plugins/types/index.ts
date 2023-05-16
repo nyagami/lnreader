@@ -24,7 +24,7 @@ export interface NovelItem {
 
 export interface ChapterItem {
   name: string;
-  url: string; //must be absoulute
+  url: string;
   releaseTime?: string;
 }
 
