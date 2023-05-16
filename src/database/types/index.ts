@@ -1,11 +1,5 @@
 import { NovelItem, ChapterItem } from '@plugins/types';
 
-export interface Category {
-  id: number;
-  name: string;
-  sort: number;
-}
-
 export interface Novel extends NovelItem {
   id: number;
   pluginId: string;
@@ -13,9 +7,18 @@ export interface Novel extends NovelItem {
 }
 
 export interface ExtendedNovel extends Novel {
-  categories: Category[];
   chaptersUnread: number;
   chaptersDownloaded: number;
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  sort: number;
+}
+
+export interface ExtendedCateogry {
+  novels: ExtendedNovel[];
 }
 
 export interface Chapter extends ChapterItem {

@@ -3,7 +3,7 @@ import * as Notifications from 'expo-notifications';
 import BackgroundService from 'react-native-background-actions';
 import { store } from '@redux/store';
 
-import { Novel, ChapterInfo } from '@database/types';
+import { Novel, Chapter, ExtendedChapter } from '@database/types';
 import {
   getNovel,
   insertNovelandChapters,
@@ -26,7 +26,7 @@ type ReduxNovelSettings = Record<
     sort: string;
     filter: string;
     showChapterTitles: boolean;
-    lastRead: ChapterInfo;
+    lastRead: Chapter;
     position: Record<
       number,
       {
@@ -44,11 +44,14 @@ const migrateChapterQuery =
 const sleep = (time: number): any =>
   new Promise(resolve => setTimeout(() => resolve(null), time));
 
-const sortChaptersByNumber = (novelName: string, chapters: ChapterInfo[]) => {
+const sortChaptersByNumber = (
+  novelName: string,
+  chapters: ExtendedChapter[],
+) => {
   for (let i = 0; i < chapters.length; ++i) {
-    chapters[i].number = parseChapterNumber(novelName, chapters[i].name);
+    chapters[i].chapterNumber = parseChapterNumber(novelName, chapters[i].name);
   }
-  return chapters.sort((a, b) => a.number - b.number);
+  return chapters.sort((a, b) => a.chapterNumber - b.chapterNumber);
 };
 
 export const migrateNovel = async (
@@ -59,7 +62,7 @@ export const migrateNovel = async (
   try {
     let fromChapters = await getChapters(fromNovel.id, '', '');
     let toNovel = await getNovel(toNovelUrl);
-    let toChapters: ChapterInfo[];
+    let toChapters: ExtendedChapter[];
     if (toNovel) {
       toChapters = await getChapters(toNovel.id, '', '');
     } else {
