@@ -14,6 +14,7 @@ import { RESTORE_DOWNLOADS_STATE } from '@redux/downloads/donwloads.types';
 import { MMKVStorage } from '@utils/mmkv/mmkv';
 import { download, exists, getJson, list } from '@api/remote';
 
+
 export const restoreNovel = (
   host: string,
   folderTree: string[],
@@ -26,6 +27,7 @@ export const restoreNovel = (
             _restoreNovelAndChapters(novel),
           );
         };
+
       });
       return {
         taskType: TaskType.NOVEL_AND_CHAPTERS,
@@ -115,6 +117,7 @@ export const restoreSetting = (
         taskType: TaskType.SETTING,
         subtasks: [],
       };
+
     });
 };
 

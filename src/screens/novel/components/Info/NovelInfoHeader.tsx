@@ -2,7 +2,9 @@ import React, { memo, useCallback } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import color from 'color';
 
+
 import * as Clipboard from 'expo-clipboard';
+
 
 import { IconButton } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -96,6 +98,7 @@ const NovelInfoHeader = ({
                 Clipboard.setStringAsync(novel.name).then(() =>
                   showToast('Copied to clipboard: ' + novel.name),
                 );
+
               }}
             >
               {novel.name}

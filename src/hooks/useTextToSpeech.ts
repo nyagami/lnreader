@@ -19,10 +19,12 @@ export const useTextToSpeech = (
   chapterText: string,
   webViewRef: RefObject<WebView>,
   markChapterAsRead: () => void,
+
 ): [TextToSpeechStatus, () => void] => {
   const [ttsStatus, setTtsStatus] = useState(TextToSpeechStatus.PAUSED);
   const index = useRef<number>(0);
   const sentences: string[] = useMemo(
+
     () =>
       htmlToText(chapterText)
         .replace(/<t-t-s>/g, '')

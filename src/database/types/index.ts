@@ -26,11 +26,13 @@ export interface ChapterInfo {
   url: string;
   name: string;
   releaseTime?: string;
+
   readTime: string | null;
   bookmark: boolean;
   unread: boolean;
   isDownloaded: boolean;
   updatedTime: string | null;
+
 
   // download screen need this :)
   pluginId: string;
