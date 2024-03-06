@@ -20,6 +20,7 @@ import {
 import { Row } from '@components/Common';
 import { overlay } from 'react-native-paper';
 import { translateNovelStatus } from '@utils/translateEnum';
+import Svg, { Circle } from 'react-native-svg';
 
 const StatsScreen = () => {
   const theme = useTheme();
@@ -77,6 +78,20 @@ const StatsScreen = () => {
       </>
     );
   }
+  const percentages = [0.4, 0.24, 0.16, 0.09, 0.04, 0.04, 0.03];
+  const colors = [
+    theme.primary,
+    theme.secondary,
+    theme.tertiary,
+    theme.onSurface,
+    theme.error,
+    theme.inversePrimary,
+    theme.outline,
+  ];
+  const strokeWidth = 12;
+  const radius = 100;
+  const perimeter = 2 * Math.PI * radius;
+  const padding = 1;
 
   return (
     <>
@@ -121,6 +136,43 @@ const StatsScreen = () => {
         <Text style={[styles.header, { color: theme.onSurfaceVariant }]}>
           {getString('statsScreen.genreDistribution')}
         </Text>
+        <View style={[{ alignItems: 'center', justifyContent: 'center' }]}>
+          <Svg
+            width={(radius + strokeWidth) * 2}
+            height={(radius + strokeWidth) * 2}
+            viewBox={`0 0 ${(radius + strokeWidth) * 2} ${
+              (radius + strokeWidth) * 2
+            }`}
+            style={{ transform: [{ rotate: '-180deg' }] }}
+          >
+            {percentages.map((percentage, index) => {
+              return (
+                <Circle
+                  key={percentage + '_' + index}
+                  cx={radius + strokeWidth}
+                  cy={radius + strokeWidth}
+                  r={radius}
+                  stroke={colors[index]}
+                  strokeWidth={strokeWidth}
+                  fill="transparent"
+                  strokeDashoffset={
+                    -(
+                      perimeter *
+                        percentages.slice(0, index).reduce((a, b) => a + b, 0) +
+                      padding
+                    )
+                  }
+                  strokeDasharray={`${
+                    perimeter * percentage - padding
+                  } ${perimeter}`}
+                  onPress={() => {
+                    console.log(colors[index]);
+                  }}
+                />
+              );
+            })}
+          </Svg>
+        </View>
         <Row style={[styles.statsRow, styles.genreRow]}>
           {Object.entries(stats.genres || {}).map(item => (
             <StatsCard key={item[0]} label={item[0]} value={item[1]} />
