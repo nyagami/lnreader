@@ -127,7 +127,6 @@ export const ChapterContent = ({
   >([]);
 
   const emmiter = useRef(new NativeEventEmitter(VolumeButtonListener));
-  const pages = useRef(0);
 
   const connectVolumeButton = () => {
     VolumeButtonListener.connect();
@@ -208,39 +207,19 @@ export const ChapterContent = ({
     }
   }, [readerPages]);
 
-  const scrollTo = useCallback(
-    (offset: number) => {
-      requestAnimationFrame(() => {
-        webViewRef?.current?.injectJavaScript(
-          !readerPages
-            ? `(()=>{
-                window.scrollTo({top:${offset},behavior:'smooth'})
+  const scrollToStart = () =>
+    requestAnimationFrame(() => {
+      webViewRef?.current?.injectJavaScript(
+        !readerPages
+          ? `(()=>{
+                window.scrollTo({top:0,behavior:'smooth'})
               })()`
-            : `(()=>{
-              document.querySelector('chapter').setAttribute('data-page', ${
-                offset / 100
-              });
-              document.querySelector("chapter").style.transform = 'translate(-${offset}%)';
-              window.ReactNativeWebView.postMessage(
-                JSON.stringify(
-                  {
-                    type:"scrollend",
-                    data:{
-                        offSetY: ${offset},                                    
-                        percentage: (${offset / 100 / pages.current} > 0 ? ${
-                offset / 100 / pages.current
-              } * 100 : 1),  
-                    }
-                  }
-                )
-              );
+          : `(()=>{
+              document.querySelector('chapter').setAttribute('data-page',0);
+              document.querySelector("chapter").style.transform = 'translate(0%)';
             })()`,
-        );
-      });
-    },
-    [webViewRef],
-  );
-
+      );
+    });
   let scrollInterval: NodeJS.Timeout;
   useEffect(() => {
     if (autoScroll) {
@@ -381,7 +360,6 @@ export const ChapterContent = ({
         nextChapter={nextChapter}
         webViewRef={webViewRef}
         readerPages={readerPages}
-        pages={pages}
         saveProgress={saveProgress}
         onLayout={() => {
           useVolumeButtons && onLayout();
@@ -407,7 +385,7 @@ export const ChapterContent = ({
             nextChapter={nextChapter}
             prevChapter={prevChapter}
             readerSheetRef={readerSheetRef}
-            scrollTo={scrollTo}
+            scrollToStart={scrollToStart}
             navigateToChapterBySwipe={navigateToChapterBySwipe}
             navigation={navigation}
             openDrawer={openDrawer}
