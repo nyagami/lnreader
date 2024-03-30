@@ -126,7 +126,7 @@ const WebViewReader: FC<WebViewReaderProps> = props => {
       subscription.remove();
       mmkvListener.remove();
     };
-  });
+  }, []);
   const debugging = `
      // Debug
      console = new Object();
@@ -248,11 +248,6 @@ const WebViewReader: FC<WebViewReaderProps> = props => {
                       --theme-rippleColor: ${theme.rippleColor};
                       --chapterCtn-height: ${layoutHeight - 140};
                       }
-                      .nextButton, .infoText {
-                        margin-left: ${readerSettings.padding}%;
-                        margin-right: ${readerSettings.padding}%;
-                        width: calc(100% - ${readerSettings.padding * 2}%);
-                      } 
                       
                       @font-face {
                         font-family: ${readerSettings.fontFamily};
