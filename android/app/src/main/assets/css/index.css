@@ -60,7 +60,9 @@ img {
 
 .nextButton,
 .infoText {
-    /* width: 100%; */
+    margin-left: var(--readerSettings-padding);
+    margin-right: var(--readerSettings-padding);
+    width: calc(100% - var(--readerSettings-padding) * 2);
     border-radius: 50px;
     border-width: 1;
     color: var(--theme-onPrimary);
