@@ -47,7 +47,7 @@ type WebViewReaderProps = {
   onLayout(): void;
   navigateToChapterBySwipe(name: string): void;
   onWebViewNavigationStateChange({ url }: WebViewNavigation): void;
-  readerPages: boolean;
+  pageReader: boolean;
 };
 
 const WebViewReader: FC<WebViewReaderProps> = props => {
@@ -56,7 +56,7 @@ const WebViewReader: FC<WebViewReaderProps> = props => {
     html,
     nextChapter,
     webViewRef,
-    readerPages,
+    pageReader,
     saveProgress,
     onPress,
     onLayout,
@@ -257,7 +257,7 @@ const WebViewReader: FC<WebViewReaderProps> = props => {
                       }
                       </style>
                       ${
-                        readerPages
+                        pageReader
                           ? `
                           <link rel="stylesheet" href="${assetsUriPrefix}/css/horizontal.css">
                         `
@@ -281,7 +281,7 @@ const WebViewReader: FC<WebViewReaderProps> = props => {
                       <chapter 
                         data-page=0
                         data-pages=0
-                        data-page-reader='${readerPages}'
+                        data-page-reader='${pageReader}'
                         data-plugin-id='${novel.pluginId}'
                         data-novel-id='${chapter.novelId}'
                         data-chapter-id='${chapter.id}'
@@ -304,7 +304,7 @@ const WebViewReader: FC<WebViewReaderProps> = props => {
                       </div>
                     </div>
                     ${
-                      !readerPages
+                      !pageReader
                         ? `
                     <div class="infoText">
                       ${getString(
