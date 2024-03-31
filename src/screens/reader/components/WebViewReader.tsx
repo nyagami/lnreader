@@ -276,7 +276,7 @@ const WebViewReader: FC<WebViewReaderProps> = props => {
                       var autoSaveInterval = 2222;
                     </script>
                   </head>
-                  <body'>
+                  <body>
                     <div class="chapterCtn"> 
                       <chapter 
                         data-page=0
