@@ -305,7 +305,7 @@ tts.highlight {
 }
 
 .contextMenu {
-    position: fixed !important;
+    position: fixed;
     background: var(--theme-surface-0-9);
     height: 0;
     top: var(--top);
@@ -313,7 +313,6 @@ tts.highlight {
     overflow: hidden;
     -webkit-backdrop-filter: blur(1px);
     backdrop-filter: blur(1px);
-    position: fixed;
     -webkit-animation: menuAnimation 0.4s 0s both;
     animation: menuAnimation 0.4s 0s both;
     transform-origin: left;
