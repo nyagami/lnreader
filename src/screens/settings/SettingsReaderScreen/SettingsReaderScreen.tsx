@@ -53,6 +53,7 @@ const SettingsReaderScreen = () => {
     showBatteryAndTime,
     verticalSeekbar,
     bionicReading,
+    pageReader,
   } = useChapterGeneralSettings();
   const READER_HEIGHT = 280;
   const assetsUriPrefix = useMemo(
@@ -164,6 +165,14 @@ const SettingsReaderScreen = () => {
               <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
                 ${webViewCSS}
+               
+                ${
+                  pageReader
+                    ? `
+                    <link rel="stylesheet" href="${assetsUriPrefix}/css/horizontal.css">
+                  `
+                    : ''
+                }
                 <script async>
                   var initSettings = {
                     showScrollPercentage: ${showScrollPercentage},
@@ -176,14 +185,18 @@ const SettingsReaderScreen = () => {
                   var autoSaveInterval = 2222;
                 </script>
               </head>
-              <body>
-                <chapter 
-                  data-novel-id='${dummyChapterInfo.novelId}'
-                  data-chapter-id='${dummyChapterInfo.chapterId}'
-                  onclick="reader.post({type:'hide'})"
-                >
-                  ${dummyHTML}
-                </chapter>
+              <body> 
+                <div class="chapterCtn"> 
+                  <chapter 
+                    data-page=0
+                    data-pages=0
+                    data-page-reader='${pageReader}'
+                    data-novel-id='${dummyChapterInfo.novelId}'
+                    data-chapter-id='${dummyChapterInfo.chapterId}'
+                  >
+                    ${dummyHTML}
+                  </chapter>
+                </div>
                 <div class="hidden" id="ToolWrapper">
                     <div id="TTS-Controller"></div>
                     <div id="ScrollBar"></div>
@@ -200,18 +213,12 @@ const SettingsReaderScreen = () => {
                 </div>
                 </body>
                 <script src="${assetsUriPrefix}/js/text-vibe.js"></script>
+                <script src="${assetsUriPrefix}/js/default.js"></script>
                 <script src="${assetsUriPrefix}/js/index.js"></script>
+                <script src="${assetsUriPrefix}/js/setup.js"></script>
+                <script src="${assetsUriPrefix}/js/horizontalScroll.js"></script>
                 <script>
-                  async function fn(){
-                    let novelName = "${dummyChapterInfo.novelName}";
-                    let chapterName = "${dummyChapterInfo.chapterName}";
-                    let sourceId =${dummyChapterInfo.sourceId};
-                    let chapterId =${dummyChapterInfo.chapterId};
-                    let novelId =${dummyChapterInfo.novelId};
-                    let html = document.getElementsByTagName("chapter")[0].innerHTML;
-                    ${readerSettings.customJS}
-                  }
-                  document.addEventListener("DOMContentLoaded", fn);
+                        setup(0,${readerSettings.customJS})
                 </script>
             </html>
             `,
