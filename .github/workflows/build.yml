@@ -85,7 +85,7 @@ jobs:
         with:
           name: LNReader-r${{ env.COMMIT_COUNT }}
           path: android/app/build/outputs/apk/release/LNReader.apk
-
+          compression-level: 0
       - name: Build Custom APK
         env:
           COMMIT_COUNT: ${{ env.COMMIT_COUNT }}
@@ -103,3 +103,4 @@ jobs:
         with:
           name: LNReader-r${{ env.COMMIT_COUNT }}(${{ env.COMMIT_ID }})-customID
           path: android/app/build/outputs/apk/release/LNReader-r${{ env.COMMIT_COUNT }}(${{ env.COMMIT_ID }})-customID.apk
+          compression-level: 0
